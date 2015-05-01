@@ -9,7 +9,7 @@ Propeller is an open source content management system (CMS) built on Dawn Framew
 * Dawn Framework (included - no additional download required)
 
 #Bug reports
-A bug is a demonstrable problem (that can be reproduced) that is cause by executing the code. Our goal is to develop a stable and secure application. Good bug reports are extremely helpful.
+A bug is a demonstrable problem (that can be reproduced) or a security issue that is caused by executing the code. Our goal is to develop a stable and secure application. Good bug reports are extremely helpful.
 
 A bug report guideline will be provided soon.
 
