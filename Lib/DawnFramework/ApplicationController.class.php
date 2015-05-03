@@ -53,6 +53,26 @@ abstract class ApplicationController {
     }
 
     /******************************************************************************************************************
+     * APPLICATION MODE
+     *****************************************************************************************************************/
+
+    /**
+     * isLocal
+     *
+     * Return true (or false) if Application Web Entry Point is run in local mode (or in remote)
+     *
+     * @return bool
+     */
+
+    public function isLocal() {
+        if (($_SERVER['SERVER_NAME'] == 'localhost') || ($_SERVER['SERVER_ADDR'] == '127.0.0.1')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /******************************************************************************************************************
      * APPLICATION NAME (GETTER/SETTER)
      *****************************************************************************************************************/
 
