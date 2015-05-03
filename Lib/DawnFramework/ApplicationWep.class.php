@@ -51,22 +51,6 @@ class ApplicationWep extends ApplicationController {
      * CONFIGURATION
      *****************************************************************************************************************/
 
-    /**
-     * isLocal
-     *
-     * Return true (or false) if Application Web Entry Point is run in local mode (or in remote)
-     *
-     * @return bool
-     */
-
-    private function isLocal() {
-        if (($_SERVER['SERVER_NAME'] == 'localhost') || ($_SERVER['SERVER_ADDR'] == '127.0.0.1')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     private function getWepConfigurationValues() {
         return $this->wepConfiguration->getConfigurationValuesKeyBased();
     }
