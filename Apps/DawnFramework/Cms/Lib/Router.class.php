@@ -136,8 +136,10 @@ class Router {
             $scan = explode(chr(10),$file);
             foreach($scan as $key => $value) {
                 $scan[$key] = str_replace(chr(10),'',$value);
-                $scan[$key] = str_replace(chr(9),'',$value);
-                if ((strtolower($value)) == (strtolower(self::REWRITE_RULE))) {
+                $scan[$key] = str_replace(chr(9),'',$scan[$key]);
+                $scan[$key] = str_replace(chr(13),'',$scan[$key]);
+                $scan[$key] = trim($scan[$key]);
+                if ((strtolower($scan[$key])) == (strtolower(self::REWRITE_RULE))) {
                     $this->routeMethod = self::REWRITE_RULE_METHOD_HTACCESS;
                     break;
                 }
