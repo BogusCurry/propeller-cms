@@ -29,19 +29,29 @@
 
 namespace Apps\DawnFramework\Cms\Lib;
 
+
 class Router {
 
+    const REWRITE_RULE                  = 'RewriteRule ^ index.php [QSA,L]';    // Case insensitive
+    const REWRITE_RULE_METHOD_GET       = 'get';
+    const REWRITE_RULE_METHOD_HTACCESS  = 'htaccess';
+
     private $basePath;
-    private $uri;
+    private $routeMethod = null;
     private $routes = array();
+    private $uri;
 
     /**
      * __construct()
      */
 
     public function __construct() {
-        $this->getCurrentUri();
-        $this->getRoutes();
+        if ($this->getRouteMethod() == self::REWRITE_RULE_METHOD_HTACCESS) {
+            $this->getRouteMethod();
+            $this->getCurrentUri();
+            $this->getRoutes();
+        }
+        // TODO * If .htaccess can't be modified on host service provider, Propeller must work by using get parameters.
     }
 
     /**
@@ -99,8 +109,41 @@ class Router {
         return $this->routes[$position];
     }
 
+    /**
+     * getRouteArray()
+     *
+     * @return array
+     */
     public function getRouteArray() {
         return $this->routes;
+    }
+
+    /**
+     * getRouteMethod
+     *
+     * Determine how CMS will handle request and route
+     *
+     * @return string
+     */
+
+    public function getRouteMethod() {
+        // We do not want to read .htaccess every time we call this method. If we already have the value
+        // stored, we'll return back that value. Otherwise, we must determine which method Propeller
+        // will use to route request.
+        if ($this->routeMethod == null) {
+            $this->routeMethod = self::REWRITE_RULE_METHOD_GET;
+            $file = file_get_contents(BASE_DIR . '.htaccess');
+            $scan = explode(chr(10),$file);
+            foreach($scan as $key => $value) {
+                $scan[$key] = str_replace(chr(10),'',$value);
+                $scan[$key] = str_replace(chr(9),'',$value);
+                if ((strtolower($value)) == (strtolower(self::REWRITE_RULE))) {
+                    $this->routeMethod = self::REWRITE_RULE_METHOD_HTACCESS;
+                    break;
+                }
+            }
+        }
+        return $this->routeMethod;
     }
 
 } 
