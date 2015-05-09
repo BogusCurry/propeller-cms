@@ -35,7 +35,11 @@ define("THEME_EXTENSION", '.php');
 class Themes extends \DawnFramework\StaticView {
 
     private $theme;
-    private $themeComponents = array();
+    private $themeComponents = array(
+        'header',
+        'body',
+        'footer',
+    );
 
     /**
      * isThemeExists
